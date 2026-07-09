@@ -51,3 +51,22 @@ def dc_multiply(A, B):
     C22 = add(dc_multiply(A21,B12), dc_multiply(A22,B22))
     return merge(C11,C12,C21,C22)
 
+def strassen(A, B):
+    n = len(A)
+    if n == 1:
+        return [[A[0][0]*B[0][0]]]
+    A11,A12,A21,A22 = split(A)
+    B11,B12,B21,B22 = split(B)
+    P1 = strassen(A11, sub(B12,B22))
+    P2 = strassen(add(A11,A12), B22)
+    P3 = strassen(add(A21,A22), B11)
+    P4 = strassen(A22, sub(B21,B11))
+    P5 = strassen(add(A11,A22), add(B11,B22))
+    P6 = strassen(sub(A12,A22), add(B21,B22))
+    P7 = strassen(sub(A11,A21), add(B11,B12))
+    C11 = add(sub(add(P5,P4),P2),P6)
+    C12 = add(P1,P2)
+    C21 = add(P3,P4)
+    C22 = sub(sub(add(P5,P1),P3),P7)
+    return merge(C11,C12,C21,C22)
+
