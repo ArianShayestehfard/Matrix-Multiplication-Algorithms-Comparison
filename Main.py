@@ -39,3 +39,15 @@ def merge(C11,C12,C21,C22):
             C[i+m][j+m] = C22[i][j]
     return C
 
+def dc_multiply(A, B):
+    n = len(A)
+    if n == 1:
+        return [[A[0][0]*B[0][0]]]
+    A11,A12,A21,A22 = split(A)
+    B11,B12,B21,B22 = split(B)
+    C11 = add(dc_multiply(A11,B11), dc_multiply(A12,B21))
+    C12 = add(dc_multiply(A11,B12), dc_multiply(A12,B22))
+    C21 = add(dc_multiply(A21,B11), dc_multiply(A22,B21))
+    C22 = add(dc_multiply(A21,B12), dc_multiply(A22,B22))
+    return merge(C11,C12,C21,C22)
+
