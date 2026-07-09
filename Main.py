@@ -10,3 +10,11 @@ def standard_multiply(A, B):
             for k in range(n):
                 C[i][j] += A[i][k] * B[k][j]
     return C
+
+def add(A, B):
+    n = len(A)
+    return [[A[i][j]+B[i][j] for j in range(n)] for i in range(n)]
+
+def sub(A, B):
+    n = len(A)
+    return [[A[i][j]-B[i][j] for j in range(n)] for i in range(n)]
