@@ -70,3 +70,31 @@ def strassen(A, B):
     C22 = sub(sub(add(P5,P1),P3),P7)
     return merge(C11,C12,C21,C22)
 
+sizes = [2,4,8,16,32,64,128]
+t1,t2,t3 = [],[],[]
+
+for n in sizes:
+    A = [[random.randint(1,5) for _ in range(n)] for _ in range(n)]
+    B = [[random.randint(1,5) for _ in range(n)] for _ in range(n)]
+
+    s = time.time()
+    standard_multiply(A,B)
+    t1.append(time.time()-s)
+
+    s = time.time()
+    dc_multiply(A,B)
+    t2.append(time.time()-s)
+
+    s = time.time()
+    strassen(A,B)
+    t3.append(time.time()-s)
+
+plt.figure(figsize=(8, 5))
+plt.plot(sizes, t1, label='Standard', marker='o')
+plt.plot(sizes, t2, label='Divide & Conquer', marker='s')
+plt.plot(sizes, t3, label='Strassen', marker='^')
+plt.xlabel('Matrix Size (n)')
+plt.ylabel('Time (seconds)')
+plt.legend()
+plt.grid(True)
+plt.show()
